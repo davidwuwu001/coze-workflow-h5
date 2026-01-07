@@ -1,31 +1,18 @@
 # 🚀 快速开始指南
 
-## 第一步：生成应用图标
+## 第一步：应用图标已就绪 ✅
 
-### 方法 1：使用浏览器工具（推荐）⭐
+应用图标已从 `images/coze-ai-logo.jpg` 生成并配置完成，无需额外操作。
 
-1. 启动本地服务器：
-   ```bash
-   python3 -m http.server 8000
-   ```
-
-2. 在浏览器中打开：
-   ```
-   http://localhost:8000/icon-generator.html
-   ```
-
-3. 页面会自动生成所有尺寸的图标预览
-
-4. 点击 **"下载全部"** 按钮，会自动下载 8 个图标文件
-
-5. 将下载的图标文件移动到项目的 `images/` 目录：
-   ```bash
-   mv ~/Downloads/icon-*.png images/
-   ```
-
-### 方法 2：使用在线工具
-
-访问 [PWA Builder](https://www.pwabuilder.com/imageGenerator)，上传一个 512x512 的图标，自动生成所有尺寸。
+所有尺寸的图标文件已在 `images/` 目录：
+- icon-72x72.png
+- icon-96x96.png
+- icon-128x128.png
+- icon-144x144.png
+- icon-152x152.png
+- icon-192x192.png
+- icon-384x384.png
+- icon-512x512.png
 
 ## 第二步：测试 PWA
 
@@ -113,7 +100,7 @@
 
 ## 🎯 检查清单
 
-- [ ] 生成并放置了所有图标文件
+- [x] 应用图标已生成并配置
 - [ ] 本地测试 Service Worker 正常工作
 - [ ] 本地测试 Manifest 加载正确
 - [ ] 在 iPhone/iPad 上测试安装
@@ -126,7 +113,7 @@
 
 ### 图标未显示？
 
-确保图标文件名正确：
+图标文件已在 `images/` 目录，确认文件存在：
 ```bash
 ls images/icon-*.png
 ```

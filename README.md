@@ -14,33 +14,25 @@
 
 ## 🚀 快速开始
 
-### 1. 生成 PWA 图标
+### 本地运行
 
-在浏览器中打开 `icon-generator.html`：
+1. 启动本地服务器（PWA 需要 HTTP 服务器）：
+   ```bash
+   # 使用 Python
+   python3 -m http.server 8000
+   
+   # 或使用 Node.js
+   npx serve
+   ```
 
-```bash
-# 使用 Python 启动本地服务器
-python3 -m http.server 8000
+2. 在浏览器中访问：
+   ```
+   http://localhost:8000
+   ```
 
-# 或使用 Node.js
-npx serve
-```
+### 测试 PWA 功能
 
-然后访问 `http://localhost:8000/icon-generator.html`，按照页面提示生成并下载图标。
-
-### 2. 放置图标文件
-
-将下载的所有图标文件放到 `images/` 目录下：
-- icon-72x72.png
-- icon-96x96.png
-- icon-128x128.png
-- icon-144x144.png
-- icon-152x152.png
-- icon-192x192.png
-- icon-384x384.png
-- icon-512x512.png
-
-### 3. 本地测试
+### 测试 PWA 功能
 
 ```bash
 # 启动本地服务器
