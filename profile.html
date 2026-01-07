@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coze 工作流聚合 - 我的</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': {
+                            100: '#F2F2F7',
+                            200: '#E5E5EA',
+                            500: '#8E8E93',
+                            900: '#1C1C1E'
+                        }
+                    },
+                    fontFamily: {
+                        'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'ios': '12px',
+                        'ios-lg': '16px',
+                        'ios-xl': '20px',
+                        'page': '40px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <!-- iPhone 15 Pro 设备容器 (393×852px) -->
+    <div class="device-container">
+        <div class="page-content">
+            
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <main class="main-content">
+                
+                <!-- 用户信息卡片 -->
+                <div class="profile-header">
+                    <div class="user-info">
+                        <div class="avatar">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=120&h=120&fit=crop" alt="用户头像">
+                        </div>
+                        <div class="user-details">
+                            <h2 class="nickname">AI 探索者</h2>
+                            <div class="member-badge">
+                                <i class="fas fa-crown"></i>
+                                <span>黄金会员</span>
+                            </div>
+                        </div>
+                        <button class="edit-btn">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 会员/积分状态卡片 -->
+                <div class="member-status-card">
+                    <div class="member-info">
+                        <div class="member-level">
+                            <i class="fas fa-crown"></i>
+                            <span class="level-name">黄金会员</span>
+                            <span class="expire-date">2026.03.15 到期</span>
+                        </div>
+                        <div class="points-info">
+                            <i class="fas fa-coins"></i>
+                            <span class="points-value">1,280</span>
+                            <span class="points-label">积分</span>
+                        </div>
+                    </div>
+                    <div class="member-actions">
+                        <a href="recharge.html" class="action-btn recharge">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>充值积分</span>
+                        </a>
+                        <a href="member.html" class="action-btn upgrade">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>升级会员</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 最近使用区域 -->
+                <div class="recent-section">
+                    <div class="section-header">
+                        <h3 class="section-title-simple">最近使用</h3>
+                        <a href="#" class="view-all">查看全部 <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="recent-list">
+                        <a href="detail.html" class="recent-item">
+                            <div class="recent-icon">
+                                <img src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=96&h=96&fit=crop" alt="历史人物故事">
+                            </div>
+                            <span class="recent-name">历史人物</span>
+                        </a>
+                        <a href="detail.html" class="recent-item">
+                            <div class="recent-icon">
+                                <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=96&h=96&fit=crop" alt="小红书图文">
+                            </div>
+                            <span class="recent-name">小红书图文</span>
+                        </a>
+                        <a href="detail.html" class="recent-item">
+                            <div class="recent-icon">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop" alt="心理学视频">
+                            </div>
+                            <span class="recent-name">心理学视频</span>
+                        </a>
+                        <a href="detail.html" class="recent-item">
+                            <div class="recent-icon">
+                                <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=96&h=96&fit=crop" alt="AI橘猫">
+                            </div>
+                            <span class="recent-name">AI橘猫</span>
+                        </a>
+                        <a href="detail.html" class="recent-item">
+                            <div class="recent-icon">
+                                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=96&h=96&fit=crop" alt="儿童绘本">
+                            </div>
+                            <span class="recent-name">儿童绘本</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 设置菜单列表 -->
+                <div class="settings-section">
+                    <div class="settings-group">
+                        <a href="settings.html" class="settings-item">
+                            <div class="item-left">
+                                <div class="item-icon" style="background-color: rgba(255, 149, 0, 0.15);">
+                                    <i class="fas fa-bell" style="color: #FF9500;"></i>
+                                </div>
+                                <span class="item-text">通知设置</span>
+                            </div>
+                            <i class="fas fa-chevron-right item-arrow"></i>
+                        </a>
+                        <a href="settings.html" class="settings-item">
+                            <div class="item-left">
+                                <div class="item-icon" style="background-color: rgba(52, 199, 89, 0.15);">
+                                    <i class="fas fa-trash-alt" style="color: #34C759;"></i>
+                                </div>
+                                <span class="item-text">清除缓存</span>
+                            </div>
+                            <div class="item-right">
+                                <span class="cache-size">23.5 MB</span>
+                                <i class="fas fa-chevron-right item-arrow"></i>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <a href="settings.html" class="settings-item">
+                            <div class="item-left">
+                                <div class="item-icon" style="background-color: rgba(0, 122, 255, 0.15);">
+                                    <i class="fas fa-info-circle" style="color: #007AFF;"></i>
+                                </div>
+                                <span class="item-text">关于我们</span>
+                            </div>
+                            <i class="fas fa-chevron-right item-arrow"></i>
+                        </a>
+                        <a href="settings.html" class="settings-item">
+                            <div class="item-left">
+                                <div class="item-icon" style="background-color: rgba(175, 82, 222, 0.15);">
+                                    <i class="fas fa-comment-dots" style="color: #AF52DE;"></i>
+                                </div>
+                                <span class="item-text">意见反馈</span>
+                            </div>
+                            <i class="fas fa-chevron-right item-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+                
+            </main>
+            
+            <!-- 底部 Tab Bar - 我的页激活状态 -->
+            <nav class="tab-bar">
+                <a href="index.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="category.html" class="tab-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>分类</span>
+                </a>
+                <a href="favorites.html" class="tab-item">
+                    <i class="fas fa-heart"></i>
+                    <span>收藏</span>
+                </a>
+                <a href="profile.html" class="tab-item active">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </nav>
+            
+        </div>
+    </div>
+</body>
+</html>

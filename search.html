@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coze 工作流聚合 - 搜索</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': {
+                            100: '#F2F2F7',
+                            200: '#E5E5EA',
+                            500: '#8E8E93',
+                            900: '#1C1C1E'
+                        }
+                    },
+                    fontFamily: {
+                        'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'ios': '12px',
+                        'ios-lg': '16px',
+                        'ios-xl': '20px',
+                        'page': '40px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <!-- iPhone 15 Pro 设备容器 (393×852px) -->
+    <div class="device-container">
+        <div class="page-content">
+            
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 搜索栏区域 -->
+            <div class="search-header bg-white px-lg py-md">
+                <div class="flex items-center gap-md">
+                    <!-- 搜索输入框 -->
+                    <div class="search-input-wrapper flex-1">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="搜索工作流..." autocomplete="off">
+                            <button class="clear-btn hidden" id="clearBtn">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 取消按钮 -->
+                    <a href="index.html" class="cancel-btn">取消</a>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <main class="main-content" id="mainContent">
+                
+                <!-- 默认状态：搜索历史和热门搜索 -->
+                <div class="search-default" id="searchDefault">
+                    
+                    <!-- 搜索历史区域 -->
+                    <div class="search-section" id="historySection">
+                        <div class="section-header">
+                            <span class="section-title">搜索历史</span>
+                            <button class="clear-history-btn" id="clearHistoryBtn">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        <div class="tag-list" id="historyTags">
+                            <span class="search-tag" data-keyword="历史人物">历史人物</span>
+                            <span class="search-tag" data-keyword="小红书">小红书</span>
+                            <span class="search-tag" data-keyword="心理学">心理学</span>
+                            <span class="search-tag" data-keyword="儿童绘本">儿童绘本</span>
+                            <span class="search-tag" data-keyword="智能体">智能体</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 热门搜索区域 -->
+                    <div class="search-section">
+                        <div class="section-header">
+                            <span class="section-title">热门搜索</span>
+                        </div>
+                        <div class="tag-list" id="hotTags">
+                            <span class="search-tag hot" data-keyword="历史人物故事">
+                                <i class="fas fa-fire"></i> 历史人物故事
+                            </span>
+                            <span class="search-tag hot" data-keyword="小红书图文">
+                                <i class="fas fa-fire"></i> 小红书图文
+                            </span>
+                            <span class="search-tag" data-keyword="心理学视频">心理学视频</span>
+                            <span class="search-tag" data-keyword="AI橘猫">AI橘猫</span>
+                            <span class="search-tag" data-keyword="马云智能体">马云智能体</span>
+                            <span class="search-tag" data-keyword="合同审查">合同审查</span>
+                            <span class="search-tag" data-keyword="儿童绘本">儿童绘本</span>
+                            <span class="search-tag" data-keyword="电商带货">电商带货</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- 搜索结果区域 -->
+                <div class="search-results hidden" id="searchResults">
+                    
+                    <!-- 搜索结果统计 -->
+                    <div class="results-header px-lg py-md">
+                        <span class="results-count" id="resultsCount">找到 <strong>0</strong> 个工作流</span>
+                    </div>
+                    
+                    <!-- 搜索结果列表 -->
+                    <div class="workflow-list px-lg pb-lg" id="resultsList">
+                        <!-- 搜索结果将通过 JavaScript 动态填充 -->
+                    </div>
+                    
+                    <!-- 空结果状态 -->
+                    <div class="empty-state hidden" id="emptyState">
+                        <i class="fas fa-search icon"></i>
+                        <h3 class="title">暂无搜索结果</h3>
+                        <p class="desc">换个关键词试试吧</p>
+                    </div>
+                    
+                </div>
+                
+            </main>
+            
+            <!-- 底部 Tab Bar -->
+            <nav class="tab-bar">
+                <a href="index.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="category.html" class="tab-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>分类</span>
+                </a>
+                <a href="favorites.html" class="tab-item">
+                    <i class="fas fa-heart"></i>
+                    <span>收藏</span>
+                </a>
+                <a href="profile.html" class="tab-item">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </nav>
+            
+        </div>
+    </div>
+
+    
+    <!-- 搜索页样式 -->
+    <style>
+        /* 搜索栏样式 */
+        .search-header {
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding-right: 30px;
+        }
+        
+        .clear-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            color: var(--gray-500);
+            font-size: 14px;
+            padding: 4px;
+        }
+        
+        .clear-btn.hidden {
+            display: none;
+        }
+        
+        .cancel-btn {
+            color: var(--primary-color);
+            font-size: var(--font-size-base);
+            white-space: nowrap;
+            padding: 8px 4px;
+        }
+        
+        /* 搜索区块样式 */
+        .search-section {
+            padding: var(--spacing-lg);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .clear-history-btn {
+            background: none;
+            color: var(--gray-500);
+            font-size: var(--font-size-sm);
+            padding: 4px 8px;
+        }
+        
+        .clear-history-btn:hover {
+            color: var(--danger-color);
+        }
+        
+        /* 搜索标签样式 */
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+        
+        .search-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--gray-100);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            color: var(--gray-900);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .search-tag:hover {
+            background-color: var(--gray-200);
+        }
+        
+        .search-tag:active {
+            transform: scale(0.95);
+        }
+        
+        .search-tag.hot {
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .search-tag.hot i {
+            font-size: 10px;
+        }
+        
+        /* 搜索结果样式 */
+        .results-header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .results-count {
+            font-size: var(--font-size-sm);
+            color: var(--gray-500);
+        }
+        
+        .results-count strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* 隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+    
+    <!-- 搜索功能脚本 -->
+    <script>
+        // 模拟工作流数据
+        const workflowData = [
+            {
+                id: 1,
+                name: '历史人物故事(高级版)',
+                desc: '自动生成历史人物故事视频，支持多种风格',
+                icon: 'https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=96&h=96&fit=crop',
+                usage: '15.2k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['历史', '人物', '故事', '视频', '历史人物']
+            },
+            {
+                id: 2,
+                name: '小红书图文工厂(高级版)',
+                desc: '输入主题自动生成小红书爆款图文内容',
+                icon: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=96&h=96&fit=crop',
+                usage: '12.8k',
+                priceType: 'points',
+                priceLabel: '15积分',
+                keywords: ['小红书', '图文', '爆款', '内容']
+            },
+            {
+                id: 3,
+                name: '心理学视频(顶配版)',
+                desc: '心理学知识视频自动生成，思维导图讲解',
+                icon: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop',
+                usage: '9.6k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['心理学', '视频', '思维导图', '知识']
+            },
+            {
+                id: 4,
+                name: 'AI橘猫日常生活(一键版)',
+                desc: '橘猫主题爆款短视频，萌宠内容必备',
+                icon: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=96&h=96&fit=crop',
+                usage: '13.7k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['橘猫', '萌宠', '短视频', 'AI橘猫']
+            },
+            {
+                id: 5,
+                name: '马云梦想引擎',
+                desc: '马云风格创业指导智能体，激发创业灵感',
+                icon: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=96&h=96&fit=crop',
+                usage: '8.1k',
+                priceType: 'points',
+                priceLabel: '20积分',
+                keywords: ['马云', '创业', '智能体', '马云智能体']
+            },
+            {
+                id: 6,
+                name: '合同审查分析',
+                desc: '自动审查分析合同内容，识别风险条款',
+                icon: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=96&h=96&fit=crop',
+                usage: '5.3k',
+                priceType: 'vip',
+                priceLabel: '会员专享',
+                keywords: ['合同', '审查', '法务', '风险']
+            },
+            {
+                id: 7,
+                name: '一键儿童绘本',
+                desc: '儿童绘本自动生成，支持有声版本',
+                icon: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=96&h=96&fit=crop',
+                usage: '11.4k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['儿童', '绘本', '教育', '儿童绘本']
+            },
+            {
+                id: 8,
+                name: '古诗词文学视频工作流',
+                desc: '古诗词文学带货视频，适合图书电商',
+                icon: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=96&h=96&fit=crop',
+                usage: '6.5k',
+                priceType: 'points',
+                priceLabel: '10积分',
+                keywords: ['古诗词', '文学', '带货', '电商', '电商带货']
+            },
+            {
+                id: 9,
+                name: '视频标题封面生成器',
+                desc: '自动生成吸睛视频标题和精美封面',
+                icon: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=96&h=96&fit=crop',
+                usage: '10.3k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['视频', '标题', '封面', '生成']
+            },
+            {
+                id: 10,
+                name: '祝福海报出图',
+                desc: '节日祝福海报批量生成，多种模板可选',
+                icon: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=96&h=96&fit=crop',
+                usage: '7.2k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['祝福', '海报', '节日', '模板']
+            },
+            {
+                id: 11,
+                name: '罗翔法治之光',
+                desc: '罗翔风格法律科普智能体',
+                icon: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=96&h=96&fit=crop',
+                usage: '9.3k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['罗翔', '法律', '科普', '智能体']
+            },
+            {
+                id: 12,
+                name: '每日英语学习',
+                desc: '每日英语学习内容自动生成',
+                icon: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=96&h=96&fit=crop',
+                usage: '9.2k',
+                priceType: 'free',
+                priceLabel: '免费',
+                keywords: ['英语', '学习', '教育', '每日']
+            }
+        ];
+        
+        // DOM 元素
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearBtn');
+        const searchDefault = document.getElementById('searchDefault');
+        const searchResults = document.getElementById('searchResults');
+        const resultsList = document.getElementById('resultsList');
+        const resultsCount = document.getElementById('resultsCount');
+        const emptyState = document.getElementById('emptyState');
+        const historySection = document.getElementById('historySection');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        
+        // 搜索功能
+        function performSearch(keyword) {
+            keyword = keyword.trim().toLowerCase();
+            
+            if (!keyword) {
+                showDefaultView();
+                return;
+            }
+            
+            // 过滤匹配的工作流
+            const results = workflowData.filter(item => {
+                const nameMatch = item.name.toLowerCase().includes(keyword);
+                const descMatch = item.desc.toLowerCase().includes(keyword);
+                const keywordMatch = item.keywords.some(k => k.toLowerCase().includes(keyword));
+                return nameMatch || descMatch || keywordMatch;
+            });
+            
+            showSearchResults(results, keyword);
+        }
+        
+        // 显示默认视图
+        function showDefaultView() {
+            searchDefault.classList.remove('hidden');
+            searchResults.classList.add('hidden');
+        }
+        
+        // 显示搜索结果
+        function showSearchResults(results, keyword) {
+            searchDefault.classList.add('hidden');
+            searchResults.classList.remove('hidden');
+            
+            // 更新结果数量
+            resultsCount.innerHTML = `找到 <strong>${results.length}</strong> 个工作流`;
+            
+            if (results.length === 0) {
+                resultsList.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            } else {
+                resultsList.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                renderResults(results);
+            }
+            
+            // 保存搜索历史
+            saveSearchHistory(keyword);
+        }
+        
+        // 渲染搜索结果
+        function renderResults(results) {
+            resultsList.innerHTML = results.map(item => `
+                <a href="detail.html" class="workflow-card">
+                    <div class="card-icon">
+                        <img src="${item.icon}" alt="${item.name}">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${item.name}</h3>
+                        <p class="card-desc">${item.desc}</p>
+                        <div class="card-meta">
+                            <span class="usage">${item.usage} 次使用</span>
+                            <span class="price-tag ${item.priceType}">${item.priceLabel}</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </a>
+            `).join('');
+        }
+        
+        // 保存搜索历史
+        function saveSearchHistory(keyword) {
+            let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+            // 移除重复项
+            history = history.filter(item => item !== keyword);
+            // 添加到开头
+            history.unshift(keyword);
+            // 最多保存10条
+            history = history.slice(0, 10);
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+        }
+        
+        // 加载搜索历史
+        function loadSearchHistory() {
+            const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+            const historyTags = document.getElementById('historyTags');
+            
+            if (history.length > 0) {
+                historyTags.innerHTML = history.map(keyword => 
+                    `<span class="search-tag" data-keyword="${keyword}">${keyword}</span>`
+                ).join('');
+                historySection.classList.remove('hidden');
+            } else {
+                historySection.classList.add('hidden');
+            }
+        }
+        
+        // 清除搜索历史
+        function clearSearchHistory() {
+            localStorage.removeItem('searchHistory');
+            historySection.classList.add('hidden');
+        }
+        
+        // 事件监听
+        searchInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            clearBtn.classList.toggle('hidden', !value);
+            performSearch(value);
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch(e.target.value);
+            }
+        });
+        
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearBtn.classList.add('hidden');
+            showDefaultView();
+            searchInput.focus();
+        });
+        
+        clearHistoryBtn.addEventListener('click', clearSearchHistory);
+        
+        // 点击搜索标签
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('search-tag') || e.target.closest('.search-tag')) {
+                const tag = e.target.classList.contains('search-tag') ? e.target : e.target.closest('.search-tag');
+                const keyword = tag.dataset.keyword;
+                searchInput.value = keyword;
+                clearBtn.classList.remove('hidden');
+                performSearch(keyword);
+            }
+        });
+        
+        // 页面加载时聚焦搜索框
+        window.addEventListener('load', () => {
+            loadSearchHistory();
+            searchInput.focus();
+        });
+    </script>
+</body>
+</html>

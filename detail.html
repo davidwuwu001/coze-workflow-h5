@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>工作流详情 - Coze 工作流聚合</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': {
+                            100: '#F2F2F7',
+                            200: '#E5E5EA',
+                            500: '#8E8E93',
+                            900: '#1C1C1E'
+                        }
+                    },
+                    fontFamily: {
+                        'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <!-- iPhone 15 Pro 设备容器 (393×852px) -->
+    <div class="device-container">
+        <div class="page-content">
+            
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 导航栏 - 返回按钮 -->
+            <div class="detail-nav-bar">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <span class="nav-title">工作流详情</span>
+                <div class="nav-right">
+                    <button class="share-btn">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 - 可滚动 -->
+            <main class="detail-content">
+
+                <!-- 工作流头部信息 -->
+                <div class="detail-header">
+                    <div class="workflow-icon-large">
+                        <img src="https://images.unsplash.com/photo-1461360370896-922624d12a74?w=160&h=160&fit=crop" alt="历史人物故事(高级版)">
+                    </div>
+                    <h1 class="workflow-name">历史人物故事(高级版)</h1>
+                    <p class="workflow-brief">AI 生成历史人物故事视频，支持多种风格和时长</p>
+                    <div class="price-info">
+                        <span class="price-tag points">5 积分/次</span>
+                        <span class="member-discount">会员免费使用</span>
+                    </div>
+                </div>
+                
+                <!-- 使用统计区域 -->
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <i class="fas fa-play-circle"></i>
+                        <span class="stat-value">8.6k</span>
+                        <span class="stat-label">使用次数</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <i class="fas fa-heart"></i>
+                        <span class="stat-value">1.8k</span>
+                        <span class="stat-label">收藏数</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <span class="stat-value">4.9</span>
+                        <span class="stat-label">评分</span>
+                    </div>
+                </div>
+                
+                <!-- 详细描述区域 -->
+                <div class="description-section">
+                    <h2 class="section-title">功能介绍</h2>
+                    <div class="description-content">
+                        <p>历史人物故事(高级版)是一款专业的 AI 视频内容创作工具，能够自动生成引人入胜的历史人物故事视频，适合短视频平台发布。</p>
+                        <p>支持中国历史、世界历史等多种题材，可自定义视频风格、时长和配音，一键生成完整的故事脚本和视频素材。</p>
+                    </div>
+                    
+                    <h2 class="section-title mt-lg">主要功能</h2>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i>智能脚本生成 - 自动撰写历史人物故事脚本</li>
+                        <li><i class="fas fa-check-circle"></i>多风格支持 - 纪录片风、故事风、解说风</li>
+                        <li><i class="fas fa-check-circle"></i>AI 配音 - 多种音色可选，支持情感调节</li>
+                        <li><i class="fas fa-check-circle"></i>素材匹配 - 自动匹配历史图片和视频素材</li>
+                    </ul>
+                    
+                    <h2 class="section-title mt-lg">使用方法</h2>
+                    <ol class="usage-steps">
+                        <li>
+                            <span class="step-number">1</span>
+                            <span class="step-text">输入历史人物名称或选择推荐人物</span>
+                        </li>
+                        <li>
+                            <span class="step-number">2</span>
+                            <span class="step-text">选择视频风格和目标时长</span>
+                        </li>
+                        <li>
+                            <span class="step-number">3</span>
+                            <span class="step-text">AI 自动生成脚本，可手动调整</span>
+                        </li>
+                        <li>
+                            <span class="step-number">4</span>
+                            <span class="step-text">选择配音和背景音乐，生成视频</span>
+                        </li>
+                    </ol>
+                </div>
+                
+            </main>
+            
+            <!-- 底部操作栏 -->
+            <div class="detail-bottom-bar">
+                <button class="favorite-btn" id="favoriteBtn">
+                    <i class="far fa-heart"></i>
+                    <span>收藏</span>
+                </button>
+                <button class="use-btn" id="useBtn">
+                    <i class="fas fa-play"></i>
+                    <span>立即使用</span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- 交互脚本 -->
+    <script>
+        // 收藏按钮交互
+        (function() {
+            const favoriteBtn = document.getElementById('favoriteBtn');
+            let isFavorited = false;
+            
+            favoriteBtn.addEventListener('click', function() {
+                isFavorited = !isFavorited;
+                const icon = this.querySelector('i');
+                const text = this.querySelector('span');
+                
+                if (isFavorited) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    this.classList.add('favorited');
+                    text.textContent = '已收藏';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    this.classList.remove('favorited');
+                    text.textContent = '收藏';
+                }
+            });
+        })();
+        
+        // 立即使用按钮
+        (function() {
+            const useBtn = document.getElementById('useBtn');
+            
+            useBtn.addEventListener('click', function() {
+                // 模拟跳转到 Coze 平台
+                alert('即将跳转到 Coze 平台执行工作流...');
+                // 实际使用时替换为: window.location.href = 'coze平台链接';
+            });
+        })();
+    </script>
+</body>
+</html>

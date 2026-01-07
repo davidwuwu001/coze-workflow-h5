@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coze 工作流聚合 - 我的收藏</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': {
+                            100: '#F2F2F7',
+                            200: '#E5E5EA',
+                            500: '#8E8E93',
+                            900: '#1C1C1E'
+                        }
+                    },
+                    fontFamily: {
+                        'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'ios': '12px',
+                        'ios-lg': '16px',
+                        'ios-xl': '20px',
+                        'page': '40px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <!-- iPhone 15 Pro 设备容器 (393×852px) -->
+    <div class="device-container">
+        <div class="page-content">
+            
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 页面标题栏 -->
+            <div class="page-header">
+                <h1 class="page-title">我的收藏</h1>
+                <span class="favorites-count" id="favoritesCount">3 个工作流</span>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <main class="main-content" id="mainContent">
+                
+                <!-- 收藏列表 (有数据状态) -->
+                <div class="favorites-list px-lg pb-lg" id="favoritesList">
+                    
+                    <!-- 收藏卡片 1 -->
+                    <div class="favorite-card">
+                        <a href="detail.html" class="workflow-card">
+                            <div class="card-icon">
+                                <img src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=96&h=96&fit=crop" alt="历史人物故事">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">历史人物故事(高级版)</h3>
+                                <p class="card-desc">自动生成历史人物故事视频，支持多种风格</p>
+                                <div class="card-meta">
+                                    <span class="usage">15.2k 次使用</span>
+                                    <span class="price-tag free">免费</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                        <button class="unfavorite-btn" onclick="removeFavorite(this)" title="取消收藏">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 收藏卡片 2 -->
+                    <div class="favorite-card">
+                        <a href="detail.html" class="workflow-card">
+                            <div class="card-icon">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop" alt="心理学视频">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">心理学视频(顶配版)</h3>
+                                <p class="card-desc">心理学知识视频自动生成，思维导图讲解</p>
+                                <div class="card-meta">
+                                    <span class="usage">9.6k 次使用</span>
+                                    <span class="price-tag free">免费</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                        <button class="unfavorite-btn" onclick="removeFavorite(this)" title="取消收藏">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 收藏卡片 3 -->
+                    <div class="favorite-card">
+                        <a href="detail.html" class="workflow-card">
+                            <div class="card-icon">
+                                <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=96&h=96&fit=crop" alt="一键儿童绘本">
+                            </div>
+                            <div class="card-content">
+                                <h3 class="card-title">一键儿童绘本</h3>
+                                <p class="card-desc">儿童绘本自动生成，支持有声版本</p>
+                                <div class="card-meta">
+                                    <span class="usage">11.4k 次使用</span>
+                                    <span class="price-tag free">免费</span>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                        <button class="unfavorite-btn" onclick="removeFavorite(this)" title="取消收藏">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    
+                </div>
+                
+                <!-- 空状态 (无数据时显示) -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="far fa-heart"></i>
+                    </div>
+                    <h3 class="empty-title">暂无收藏</h3>
+                    <p class="empty-desc">快去发现感兴趣的工作流吧</p>
+                    <a href="index.html" class="discover-btn">
+                        <i class="fas fa-compass"></i>
+                        去发现
+                    </a>
+                </div>
+                
+            </main>
+            
+            <!-- 底部 Tab Bar - 收藏页激活状态 -->
+            <nav class="tab-bar">
+                <a href="index.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="category.html" class="tab-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>分类</span>
+                </a>
+                <a href="favorites.html" class="tab-item active">
+                    <i class="fas fa-heart"></i>
+                    <span>收藏</span>
+                </a>
+                <a href="profile.html" class="tab-item">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </nav>
+            
+        </div>
+    </div>
+    
+    <!-- 收藏页交互脚本 -->
+    <script>
+        // 取消收藏功能
+        function removeFavorite(btn) {
+            const card = btn.closest('.favorite-card');
+            
+            // 添加移除动画
+            card.style.transition = 'all 0.3s ease';
+            card.style.transform = 'translateX(100%)';
+            card.style.opacity = '0';
+            
+            // 动画结束后移除元素
+            setTimeout(() => {
+                card.remove();
+                updateFavoritesCount();
+                checkEmptyState();
+            }, 300);
+        }
+        
+        // 更新收藏数量
+        function updateFavoritesCount() {
+            const count = document.querySelectorAll('.favorite-card').length;
+            const countEl = document.getElementById('favoritesCount');
+            countEl.textContent = count + ' 个工作流';
+        }
+        
+        // 检查是否显示空状态
+        function checkEmptyState() {
+            const favoritesList = document.getElementById('favoritesList');
+            const emptyState = document.getElementById('emptyState');
+            const cards = document.querySelectorAll('.favorite-card');
+            
+            if (cards.length === 0) {
+                favoritesList.style.display = 'none';
+                emptyState.style.display = 'flex';
+            } else {
+                favoritesList.style.display = 'block';
+                emptyState.style.display = 'none';
+            }
+        }
+        
+        // 页面加载时检查状态
+        document.addEventListener('DOMContentLoaded', function() {
+            checkEmptyState();
+        });
+    </script>
+</body>
+</html>

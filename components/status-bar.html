@@ -1,0 +1,87 @@
+<!--
+  iOS 状态栏组件 (StatusBar)
+  
+  使用说明：
+  1. 复制此组件代码到页面的 .page-content 容器内的最顶部
+  2. 可通过添加 bg-white 或 bg-transparent 类来设置背景色
+  3. 状态栏高度固定为 47px
+  
+  Requirements: 11.2
+-->
+
+<!-- iOS 状态栏 - 浅色背景版本 -->
+<div class="status-bar bg-white">
+    <span class="time">9:41</span>
+    <div class="icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+    </div>
+</div>
+
+<!--
+  样式说明（已在 styles.css 中定义）：
+  
+  .status-bar {
+      height: 47px;
+      padding: 12px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+      flex-shrink: 0;
+  }
+  
+  .status-bar .time {
+      font-size: 14px;
+      font-weight: 600;
+      color: #000000;
+  }
+  
+  .status-bar .icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+  }
+  
+  .status-bar .icons i {
+      font-size: 14px;
+      color: #000000;
+  }
+-->
+
+<!-- 变体：透明背景版本（用于有背景图的页面） -->
+<!--
+<div class="status-bar bg-transparent">
+    <span class="time">9:41</span>
+    <div class="icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+    </div>
+</div>
+-->
+
+<!-- 变体：深色文字版本（用于浅色背景） -->
+<!--
+<div class="status-bar bg-white">
+    <span class="time text-black">9:41</span>
+    <div class="icons text-black">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+    </div>
+</div>
+-->
+
+<!-- 变体：浅色文字版本（用于深色背景） -->
+<!--
+<div class="status-bar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <span class="time" style="color: white;">9:41</span>
+    <div class="icons" style="color: white;">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+    </div>
+</div>
+-->

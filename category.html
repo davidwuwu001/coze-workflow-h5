@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coze 工作流聚合 - 分类</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': {
+                            100: '#F2F2F7',
+                            200: '#E5E5EA',
+                            500: '#8E8E93',
+                            900: '#1C1C1E'
+                        }
+                    },
+                    fontFamily: {
+                        'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'ios': '12px',
+                        'ios-lg': '16px',
+                        'ios-xl': '20px',
+                        'page': '40px'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 分类页专用样式 -->
+    <style>
+        /* 页面内容布局 */
+        .page-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        /* 状态栏和导航栏固定 */
+        .status-bar,
+        .nav-bar,
+        .category-detail-header,
+        .filter-tabs {
+            flex-shrink: 0;
+        }
+        
+        /* 底部导航栏固定 */
+        .tab-bar {
+            flex-shrink: 0;
+        }
+        
+        /* 分类网格 */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+        }
+        
+        /* 分类卡片 */
+        .category-card {
+            background-color: var(--white);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .category-card:active {
+            transform: scale(0.96);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .category-card .icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .category-card .name {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--gray-900);
+            text-align: center;
+        }
+        
+        .category-card .count {
+            font-size: var(--font-size-xs);
+            color: var(--gray-500);
+        }
+        
+        /* 分类详情视图 */
+        .category-detail-view {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+        
+        .category-detail-view.active {
+            display: flex;
+        }
+        
+        .category-grid-view {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+        
+        .category-grid-view.hidden {
+            display: none;
+        }
+        
+        /* 分类详情中的工作流列表滚动 */
+        .category-detail-view .main-content {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+        
+        /* 分类网格滚动 */
+        .category-grid-view .main-content {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+        
+        /* 分类详情头部 */
+        .category-detail-header {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .category-detail-header .back-btn {
+            font-size: var(--font-size-xl);
+            color: var(--primary-color);
+            margin-right: var(--spacing-md);
+            cursor: pointer;
+        }
+        
+        .category-detail-header .category-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .category-detail-header .category-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .category-detail-header .category-name {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .category-detail-header .workflow-count {
+            font-size: var(--font-size-sm);
+            color: var(--gray-500);
+            margin-left: auto;
+        }
+        
+        /* 筛选标签 */
+        .filter-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .filter-tab {
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            background-color: var(--gray-100);
+            color: var(--gray-900);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-tab.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <!-- iPhone 15 Pro 设备容器 (393×852px) -->
+    <div class="device-container">
+        <div class="page-content">
+            
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 分类网格视图 -->
+            <div class="category-grid-view" id="categoryGridView">
+                <!-- 页面标题栏 -->
+                <div class="nav-bar">
+                    <span class="title">工作流分类</span>
+                </div>
+                
+                <!-- 主内容区域 -->
+                <main class="main-content">
+                    <!-- 分类网格 -->
+                    <div class="category-grid" id="categoryGrid">
+                        <!-- 分类卡片将通过 JavaScript 动态生成 -->
+                    </div>
+                </main>
+            </div>
+            
+            <!-- 分类详情视图 -->
+            <div class="category-detail-view" id="categoryDetailView">
+                <!-- 分类详情头部 -->
+                <div class="category-detail-header">
+                    <i class="fas fa-chevron-left back-btn" id="backBtn"></i>
+                    <div class="category-info">
+                        <div class="category-icon" id="detailCategoryIcon">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <span class="category-name" id="detailCategoryName">文案写作</span>
+                    </div>
+                    <span class="workflow-count" id="detailWorkflowCount">12 个工作流</span>
+                </div>
+                
+                <!-- 筛选标签 -->
+                <div class="filter-tabs">
+                    <span class="filter-tab active" data-filter="all">全部</span>
+                    <span class="filter-tab" data-filter="free">免费</span>
+                    <span class="filter-tab" data-filter="points">积分</span>
+                    <span class="filter-tab" data-filter="vip">会员</span>
+                </div>
+                
+                <!-- 工作流列表 -->
+                <main class="main-content">
+                    <div class="workflow-list px-lg py-lg" id="categoryWorkflowList">
+                        <!-- 工作流卡片将通过 JavaScript 动态生成 -->
+                    </div>
+                </main>
+            </div>
+            
+            <!-- 底部 Tab Bar -->
+            <nav class="tab-bar">
+                <a href="index.html" class="tab-item">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="category.html" class="tab-item active">
+                    <i class="fas fa-th-large"></i>
+                    <span>分类</span>
+                </a>
+                <a href="favorites.html" class="tab-item">
+                    <i class="fas fa-heart"></i>
+                    <span>收藏</span>
+                </a>
+                <a href="profile.html" class="tab-item">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </nav>
+            
+        </div>
+    </div>
+    
+    <!-- 分类页脚本 -->
+    <script>
+        // 分类数据
+        const categories = [
+            { id: 'video', name: '视频内容创作', icon: 'fa-video', color: '#007AFF', bgColor: 'rgba(0, 122, 255, 0.15)', count: 35 },
+            { id: 'image', name: '图文内容生成', icon: 'fa-images', color: '#34C759', bgColor: 'rgba(52, 199, 89, 0.15)', count: 15 },
+            { id: 'industry', name: '行业批量做图', icon: 'fa-building', color: '#FF9500', bgColor: 'rgba(255, 149, 0, 0.15)', count: 9 },
+            { id: 'agent', name: '智能体/IP打造', icon: 'fa-robot', color: '#AF52DE', bgColor: 'rgba(175, 82, 222, 0.15)', count: 9 },
+            { id: 'office', name: '自动化办公', icon: 'fa-briefcase', color: '#00C7BE', bgColor: 'rgba(0, 199, 190, 0.15)', count: 8 },
+            { id: 'tool', name: '功能工具类', icon: 'fa-tools', color: '#FF3B30', bgColor: 'rgba(255, 59, 48, 0.15)', count: 11 },
+            { id: 'edu', name: '教育学习类', icon: 'fa-graduation-cap', color: '#FFCC00', bgColor: 'rgba(255, 204, 0, 0.15)', count: 14 },
+            { id: 'ecom', name: '电商带货类', icon: 'fa-shopping-cart', color: '#FF2D55', bgColor: 'rgba(255, 45, 85, 0.15)', count: 6 }
+        ];
+        
+        // 工作流数据（按分类）
+        const workflowsByCategory = {
+            video: [
+                { id: 1, name: '历史人物故事(高级版)', desc: '自动生成历史人物故事视频，支持多种风格', usage: '15.2k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=96&h=96&fit=crop' },
+                { id: 2, name: '心理学视频(顶配版)', desc: '心理学知识视频自动生成，思维导图讲解', usage: '9.6k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop' },
+                { id: 3, name: 'AI橘猫日常生活(一键版)', desc: '橘猫主题爆款短视频，萌宠内容必备', usage: '13.7k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=96&h=96&fit=crop' },
+                { id: 4, name: '宫崎骏风格治愈', desc: '宫崎骏动画风格治愈系视频生成', usage: '8.3k', priceType: 'points', points: 15, icon: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=96&h=96&fit=crop' },
+                { id: 5, name: 'AI漫剧片段制作sora2', desc: '使用SORA2生成漫剧片段视频', usage: '6.5k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=96&h=96&fit=crop' },
+                { id: 6, name: '影视级AI古诗词', desc: '影视级古诗词视频自动生成', usage: '7.8k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=96&h=96&fit=crop' },
+                { id: 7, name: '商业解说视频', desc: '商业案例解说视频自动生成', usage: '5.2k', priceType: 'points', points: 20, icon: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=96&h=96&fit=crop' },
+                { id: 8, name: '励志类型视频', desc: '励志主题视频内容自动生成', usage: '4.8k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?w=96&h=96&fit=crop' }
+            ],
+            image: [
+                { id: 9, name: '小红书图文工厂(高级版)', desc: '输入主题自动生成小红书爆款图文', usage: '12.8k', priceType: 'points', points: 15, icon: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=96&h=96&fit=crop' },
+                { id: 10, name: '今日头条图文', desc: '输入主题生成今日头条图文内容', usage: '6.3k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=96&h=96&fit=crop' },
+                { id: 11, name: '朋友圈文案系统', desc: '朋友圈文案自动生成，多种风格', usage: '8.9k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=96&h=96&fit=crop' },
+                { id: 12, name: '知识卡片生成', desc: '知识点卡片图文快速生成', usage: '5.4k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=96&h=96&fit=crop' },
+                { id: 13, name: 'AI漫画连载哆啦A梦', desc: '漫画风格图文内容自动生成', usage: '4.2k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=96&h=96&fit=crop' }
+            ],
+            industry: [
+                { id: 14, name: '祝福海报出图', desc: '节日祝福海报批量生成，多种模板', usage: '7.2k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=96&h=96&fit=crop' },
+                { id: 15, name: '设计装修行业做图', desc: '装修设计案例图自动生成', usage: '3.8k', priceType: 'points', points: 10, icon: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=96&h=96&fit=crop' },
+                { id: 16, name: '美妆行业出图', desc: '美妆产品推广图自动生成', usage: '4.5k', priceType: 'points', points: 10, icon: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=96&h=96&fit=crop' },
+                { id: 17, name: '旅行行业做图', desc: '旅游推广图片自动生成', usage: '5.1k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=96&h=96&fit=crop' },
+                { id: 18, name: '金融行业做图', desc: '金融产品宣传图自动生成', usage: '2.9k', priceType: 'vip', icon: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=96&h=96&fit=crop' }
+            ],
+            agent: [
+                { id: 19, name: '马云梦想引擎', desc: '马云风格创业指导智能体', usage: '8.1k', priceType: 'points', points: 20, icon: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=96&h=96&fit=crop' },
+                { id: 20, name: '马斯克战略顾问', desc: '马斯克风格战略咨询智能体', usage: '6.7k', priceType: 'points', points: 25, icon: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=96&h=96&fit=crop' },
+                { id: 21, name: '罗翔法治之光', desc: '罗翔风格法律科普智能体', usage: '9.3k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=96&h=96&fit=crop' },
+                { id: 22, name: '巴菲特价值引擎', desc: '巴菲特风格投资咨询智能体', usage: '5.8k', priceType: 'vip', icon: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=96&h=96&fit=crop' },
+                { id: 23, name: '人设IP打造', desc: '个人IP人设定制打造工具', usage: '7.4k', priceType: 'points', points: 15, icon: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop' }
+            ],
+            office: [
+                { id: 24, name: '合同审查分析', desc: '自动审查分析合同内容，识别风险', usage: '5.3k', priceType: 'vip', icon: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=96&h=96&fit=crop' },
+                { id: 25, name: '数据分析工作流', desc: '数据自动分析处理，生成报告', usage: '4.6k', priceType: 'points', points: 15, icon: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=96&h=96&fit=crop' },
+                { id: 26, name: '邮箱自动回复', desc: '邮件自动回复生成，智能客服', usage: '3.9k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=96&h=96&fit=crop' },
+                { id: 27, name: '发票识别保存到Excel', desc: '发票OCR识别并保存到表格', usage: '6.2k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=96&h=96&fit=crop' },
+                { id: 28, name: '智能客服对话流', desc: '智能客服对话系统搭建', usage: '4.1k', priceType: 'vip', icon: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=96&h=96&fit=crop' }
+            ],
+            tool: [
+                { id: 29, name: '视频标题封面生成器', desc: '自动生成吸睛视频标题和封面', usage: '10.3k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=96&h=96&fit=crop' },
+                { id: 30, name: '复刻抖音视频为文字', desc: '抖音视频转文字解读', usage: '7.6k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=96&h=96&fit=crop' },
+                { id: 31, name: '提取口播文案', desc: '从视频中提取口播文案', usage: '5.8k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=96&h=96&fit=crop' },
+                { id: 32, name: '一键生成三宫格图', desc: '三宫格图片快速生成', usage: '8.4k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=96&h=96&fit=crop' },
+                { id: 33, name: '智能简历生成', desc: '输入图片和内容生成简历', usage: '6.1k', priceType: 'points', points: 10, icon: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=96&h=96&fit=crop' }
+            ],
+            edu: [
+                { id: 34, name: '一键儿童绘本', desc: '儿童绘本自动生成，支持有声版', usage: '11.4k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=96&h=96&fit=crop' },
+                { id: 35, name: '每日英语学习', desc: '每日英语学习内容自动生成', usage: '9.2k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=96&h=96&fit=crop' },
+                { id: 36, name: '单词思维导图视频', desc: '单词思维导图视频制作', usage: '5.7k', priceType: 'points', points: 10, icon: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=96&h=96&fit=crop' },
+                { id: 37, name: '启蒙古诗修正版', desc: '古诗启蒙教育视频生成', usage: '6.8k', priceType: 'free', icon: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=96&h=96&fit=crop' },
+                { id: 38, name: '考试出题与作文批改', desc: '自动出题和作文批改系统', usage: '4.3k', priceType: 'vip', icon: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=96&h=96&fit=crop' },
+                { id: 39, name: '听故事学中医', desc: '中医知识故事化讲解', usage: '3.5k', priceType: 'points', points: 15, icon: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=96&h=96&fit=crop' }
+            ],
+            ecom: [
+                { id: 40, name: '古诗词文学视频工作流', desc: '古诗词文学带货视频，图书电商', usage: '6.5k', priceType: 'points', points: 10, icon: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=96&h=96&fit=crop' },
+                { id: 41, name: '图书带货视频', desc: '图书推荐带货视频生成', usage: '5.2k', priceType: 'points', points: 15, icon: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=96&h=96&fit=crop' },
+                { id: 42, name: '电商带货通用', desc: '通用电商带货视频生成', usage: '7.8k', priceType: 'vip', icon: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=96&h=96&fit=crop' },
+                { id: 43, name: '淘宝宣传视频', desc: '淘宝商品宣传视频生成', usage: '4.6k', priceType: 'points', points: 20, icon: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=96&h=96&fit=crop' }
+            ]
+        };
+        
+        // 当前选中的分类
+        let currentCategory = null;
+        let currentFilter = 'all';
+        
+        // 渲染分类网格
+        function renderCategoryGrid() {
+            const grid = document.getElementById('categoryGrid');
+            grid.innerHTML = categories.map(cat => `
+                <div class="category-card" data-category="${cat.id}">
+                    <div class="icon-wrapper" style="background-color: ${cat.bgColor}; color: ${cat.color};">
+                        <i class="fas ${cat.icon}"></i>
+                    </div>
+                    <span class="name">${cat.name}</span>
+                    <span class="count">${cat.count} 个工作流</span>
+                </div>
+            `).join('');
+            
+            // 绑定点击事件
+            grid.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const categoryId = card.dataset.category;
+                    showCategoryDetail(categoryId);
+                });
+            });
+        }
+        
+        // 显示分类详情
+        function showCategoryDetail(categoryId) {
+            currentCategory = categories.find(c => c.id === categoryId);
+            if (!currentCategory) return;
+            
+            // 更新头部信息
+            document.getElementById('detailCategoryIcon').innerHTML = `<i class="fas ${currentCategory.icon}"></i>`;
+            document.getElementById('detailCategoryIcon').style.backgroundColor = currentCategory.bgColor;
+            document.getElementById('detailCategoryIcon').style.color = currentCategory.color;
+            document.getElementById('detailCategoryName').textContent = currentCategory.name;
+            
+            // 渲染工作流列表
+            renderWorkflowList();
+            
+            // 切换视图
+            document.getElementById('categoryGridView').classList.add('hidden');
+            document.getElementById('categoryDetailView').classList.add('active');
+        }
+        
+        // 返回分类网格
+        function backToGrid() {
+            document.getElementById('categoryGridView').classList.remove('hidden');
+            document.getElementById('categoryDetailView').classList.remove('active');
+            currentCategory = null;
+            currentFilter = 'all';
+            
+            // 重置筛选标签
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.filter === 'all');
+            });
+        }
+        
+        // 渲染工作流列表
+        function renderWorkflowList() {
+            if (!currentCategory) return;
+            
+            let workflows = workflowsByCategory[currentCategory.id] || [];
+            
+            // 应用筛选
+            if (currentFilter !== 'all') {
+                workflows = workflows.filter(w => w.priceType === currentFilter);
+            }
+            
+            // 更新数量
+            document.getElementById('detailWorkflowCount').textContent = `${workflows.length} 个工作流`;
+            
+            const list = document.getElementById('categoryWorkflowList');
+            
+            if (workflows.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox icon"></i>
+                        <p class="title">暂无工作流</p>
+                        <p class="desc">该分类下暂无符合条件的工作流</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            list.innerHTML = workflows.map(w => {
+                let priceTag = '';
+                if (w.priceType === 'free') {
+                    priceTag = '<span class="price-tag free">免费</span>';
+                } else if (w.priceType === 'points') {
+                    priceTag = `<span class="price-tag points">${w.points}积分</span>`;
+                } else if (w.priceType === 'vip') {
+                    priceTag = '<span class="price-tag vip">会员专享</span>';
+                }
+                
+                return `
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="${w.icon}" alt="${w.name}">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">${w.name}</h3>
+                            <p class="card-desc">${w.desc}</p>
+                            <div class="card-meta">
+                                <span class="usage">${w.usage} 次使用</span>
+                                ${priceTag}
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                `;
+            }).join('');
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 渲染分类网格
+            renderCategoryGrid();
+            
+            // 返回按钮
+            document.getElementById('backBtn').addEventListener('click', backToGrid);
+            
+            // 筛选标签
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentFilter = tab.dataset.filter;
+                    renderWorkflowList();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

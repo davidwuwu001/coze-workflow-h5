@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coze 工作流聚合 - 确认支付</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': { 100: '#F2F2F7', 200: '#E5E5EA', 500: '#8E8E93', 900: '#1C1C1E' },
+                        'wechat': '#07C160',
+                        'alipay': '#1677FF'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .payment-option {
+            transition: all 0.2s ease;
+        }
+        .payment-option.selected {
+            border-color: #007AFF;
+            background-color: rgba(0, 122, 255, 0.05);
+        }
+        .payment-option:active {
+            transform: scale(0.98);
+        }
+        .fixed-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <div class="device-container">
+        <div class="page-content">
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+
+            <!-- 导航栏 -->
+            <div class="nav-bar bg-white border-b border-ios-gray-200">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <span class="title">确认支付</span>
+            </div>
+
+            <!-- 主内容区域 -->
+            <main class="main-content bg-ios-gray-100">
+                <!-- 订单信息 -->
+                <div class="bg-white mx-4 mt-4 rounded-xl p-4">
+                    <h3 class="text-sm text-ios-gray-500 mb-3">订单信息</h3>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-ios-gray-900">商品名称</span>
+                        <span class="text-ios-gray-900 font-medium">季卡会员</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-ios-gray-900">有效期</span>
+                        <span class="text-ios-gray-500">90天</span>
+                    </div>
+                    <div class="flex items-center justify-between pt-3 border-t border-ios-gray-100">
+                        <span class="text-ios-gray-900">应付金额</span>
+                        <span class="text-2xl font-bold text-ios-red">¥49.9</span>
+                    </div>
+                </div>
+
+                <!-- 支付方式 -->
+                <div class="px-4 py-5">
+                    <h3 class="text-lg font-semibold text-ios-gray-900 mb-4">选择支付方式</h3>
+                    
+                    <!-- 微信支付 -->
+                    <div class="payment-option bg-white rounded-xl p-4 mb-3 border-2 border-ios-blue selected cursor-pointer flex items-center justify-between" onclick="selectPayment(this, 'wechat')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-wechat flex items-center justify-center">
+                                <i class="fab fa-weixin text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-ios-gray-900">微信支付</div>
+                                <div class="text-xs text-ios-gray-500">推荐使用</div>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 rounded-full border-2 border-ios-blue flex items-center justify-center" id="wechat-check">
+                            <i class="fas fa-check text-ios-blue text-xs"></i>
+                        </div>
+                    </div>
+
+                    <!-- 支付宝 -->
+                    <div class="payment-option bg-white rounded-xl p-4 mb-3 border-2 border-transparent cursor-pointer flex items-center justify-between" onclick="selectPayment(this, 'alipay')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-alipay flex items-center justify-center">
+                                <i class="fab fa-alipay text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-ios-gray-900">支付宝</div>
+                                <div class="text-xs text-ios-gray-500">支付宝安全支付</div>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 rounded-full border-2 border-ios-gray-200 flex items-center justify-center" id="alipay-check">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 支付说明 -->
+                <div class="px-4 pb-32">
+                    <div class="bg-ios-gray-100 rounded-xl p-4">
+                        <div class="flex items-start gap-2 text-sm text-ios-gray-500">
+                            <i class="fas fa-shield-alt text-ios-green mt-0.5"></i>
+                            <div>
+                                <p class="mb-2">支付安全由微信/支付宝官方保障</p>
+                                <p>如遇支付问题，请联系客服处理</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 底部支付按钮 -->
+            <div class="fixed-bottom bg-white border-t border-ios-gray-200 px-4 py-3 pb-8">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-ios-gray-500">应付金额</span>
+                    <span class="text-xl font-bold text-ios-red">¥49.9</span>
+                </div>
+                <button onclick="confirmPayment()" class="w-full bg-ios-blue text-white text-center py-3 rounded-xl font-semibold text-lg">
+                    确认支付
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 支付成功弹窗 -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl p-6 mx-8 text-center">
+            <div class="w-16 h-16 mx-auto bg-ios-green rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-check text-white text-3xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-ios-gray-900 mb-2">支付成功</h3>
+            <p class="text-ios-gray-500 mb-6">恭喜您成为季卡会员！</p>
+            <a href="profile.html" class="block w-full bg-ios-blue text-white py-3 rounded-xl font-semibold">
+                返回个人中心
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let selectedPayment = 'wechat';
+
+        function selectPayment(element, method) {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+                option.classList.remove('border-ios-blue');
+                option.classList.add('border-transparent');
+            });
+            element.classList.add('selected');
+            element.classList.remove('border-transparent');
+            element.classList.add('border-ios-blue');
+            
+            // 更新选中图标
+            document.getElementById('wechat-check').innerHTML = '';
+            document.getElementById('alipay-check').innerHTML = '';
+            document.getElementById('wechat-check').classList.remove('border-ios-blue');
+            document.getElementById('alipay-check').classList.remove('border-ios-blue');
+            document.getElementById('wechat-check').classList.add('border-ios-gray-200');
+            document.getElementById('alipay-check').classList.add('border-ios-gray-200');
+            
+            document.getElementById(method + '-check').innerHTML = '<i class="fas fa-check text-ios-blue text-xs"></i>';
+            document.getElementById(method + '-check').classList.remove('border-ios-gray-200');
+            document.getElementById(method + '-check').classList.add('border-ios-blue');
+            
+            selectedPayment = method;
+        }
+
+        function confirmPayment() {
+            // 模拟支付成功
+            document.getElementById('successModal').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

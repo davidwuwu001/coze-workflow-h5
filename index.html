@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Coze 工作流聚合 - 首页</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Tailwind 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ios-blue': '#007AFF',
+                        'ios-green': '#34C759',
+                        'ios-orange': '#FF9500',
+                        'ios-red': '#FF3B30',
+                        'ios-purple': '#AF52DE',
+                        'ios-gray': {
+                            100: '#F2F2F7',
+                            200: '#E5E5EA',
+                            500: '#8E8E93',
+                            900: '#1C1C1E'
+                        }
+                    },
+                    fontFamily: {
+                        'ios': ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'ios': '12px',
+                        'ios-lg': '16px',
+                        'ios-xl': '20px',
+                        'page': '40px'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 min-h-screen flex items-center justify-center p-5">
+    <!-- iPhone 15 Pro 设备容器 (393×852px) -->
+    <div class="device-container">
+        <div class="page-content">
+            
+            <!-- iOS 状态栏 -->
+            <div class="status-bar bg-white">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <!-- 页面标题栏 -->
+            <div class="bg-white px-4 pb-3 flex items-center justify-between">
+                <h1 class="text-xl font-bold text-ios-gray-900">超级AI 智能体系统</h1>
+                <a href="search.html" class="w-9 h-9 flex items-center justify-center rounded-full bg-ios-gray-100">
+                    <i class="fas fa-search text-ios-gray-500"></i>
+                </a>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <main class="main-content">
+                
+                <!-- 轮播图区域 -->
+                <div class="banner-container" id="bannerContainer">
+                    <div class="banner-slides" id="bannerSlides">
+                        <div class="banner-slide">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=320&fit=crop" alt="AI 智能助手">
+                            <div class="banner-overlay">
+                                <h3 class="banner-title">AI 智能助手</h3>
+                                <p class="banner-subtitle">发现更多高效工作流</p>
+                            </div>
+                        </div>
+                        <div class="banner-slide">
+                            <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=320&fit=crop" alt="新品上线">
+                            <div class="banner-overlay">
+                                <h3 class="banner-title">新品上线</h3>
+                                <p class="banner-subtitle">智能文案生成工具</p>
+                            </div>
+                        </div>
+                        <div class="banner-slide">
+                            <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=320&fit=crop" alt="会员专享">
+                            <div class="banner-overlay">
+                                <h3 class="banner-title">会员专享</h3>
+                                <p class="banner-subtitle">解锁全部高级功能</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="banner-indicators" id="bannerIndicators">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+                
+                <!-- 分类标签栏 -->
+                <div class="category-tabs" id="categoryTabs">
+                    <span class="category-tab active" data-category="all">全部</span>
+                    <span class="category-tab" data-category="video">视频内容</span>
+                    <span class="category-tab" data-category="image">图文生成</span>
+                    <span class="category-tab" data-category="industry">行业做图</span>
+                    <span class="category-tab" data-category="agent">智能体/IP</span>
+                    <span class="category-tab" data-category="office">自动化办公</span>
+                    <span class="category-tab" data-category="tool">功能工具</span>
+                    <span class="category-tab" data-category="edu">教育学习</span>
+                    <span class="category-tab" data-category="ecom">电商带货</span>
+                </div>
+                
+                <!-- 工作流列表 -->
+                <div class="workflow-list px-lg pb-lg">
+                    
+                    <!-- 工作流卡片 1 - 免费 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=96&h=96&fit=crop" alt="历史人物故事">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">历史人物故事(高级版)</h3>
+                            <p class="card-desc">自动生成历史人物故事视频，支持多种风格</p>
+                            <div class="card-meta">
+                                <span class="usage">15.2k 次使用</span>
+                                <span class="price-tag free">免费</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 2 - 积分 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=96&h=96&fit=crop" alt="小红书图文工厂">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">小红书图文工厂(高级版)</h3>
+                            <p class="card-desc">输入主题自动生成小红书爆款图文内容</p>
+                            <div class="card-meta">
+                                <span class="usage">12.8k 次使用</span>
+                                <span class="price-tag points">15积分</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 3 - 免费 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=96&h=96&fit=crop" alt="心理学视频">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">心理学视频(顶配版)</h3>
+                            <p class="card-desc">心理学知识视频自动生成，思维导图讲解</p>
+                            <div class="card-meta">
+                                <span class="usage">9.6k 次使用</span>
+                                <span class="price-tag free">免费</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 4 - 会员专享 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=96&h=96&fit=crop" alt="合同审查分析">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">合同审查分析</h3>
+                            <p class="card-desc">自动审查分析合同内容，识别风险条款</p>
+                            <div class="card-meta">
+                                <span class="usage">5.3k 次使用</span>
+                                <span class="price-tag vip">会员专享</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 5 - 积分 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=96&h=96&fit=crop" alt="马云梦想引擎">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">马云梦想引擎</h3>
+                            <p class="card-desc">马云风格创业指导智能体，激发创业灵感</p>
+                            <div class="card-meta">
+                                <span class="usage">8.1k 次使用</span>
+                                <span class="price-tag points">20积分</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 6 - 免费 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=96&h=96&fit=crop" alt="一键儿童绘本">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">一键儿童绘本</h3>
+                            <p class="card-desc">儿童绘本自动生成，支持有声版本</p>
+                            <div class="card-meta">
+                                <span class="usage">11.4k 次使用</span>
+                                <span class="price-tag free">免费</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 7 - 免费 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=96&h=96&fit=crop" alt="祝福海报出图">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">祝福海报出图</h3>
+                            <p class="card-desc">节日祝福海报批量生成，多种模板可选</p>
+                            <div class="card-meta">
+                                <span class="usage">7.2k 次使用</span>
+                                <span class="price-tag free">免费</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 8 - 积分 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=96&h=96&fit=crop" alt="古诗词文学视频">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">古诗词文学视频工作流</h3>
+                            <p class="card-desc">古诗词文学带货视频，适合图书电商</p>
+                            <div class="card-meta">
+                                <span class="usage">6.5k 次使用</span>
+                                <span class="price-tag points">10积分</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 9 - 免费 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=96&h=96&fit=crop" alt="视频标题封面生成器">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">视频标题封面生成器</h3>
+                            <p class="card-desc">自动生成吸睛视频标题和精美封面</p>
+                            <div class="card-meta">
+                                <span class="usage">10.3k 次使用</span>
+                                <span class="price-tag free">免费</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                    <!-- 工作流卡片 10 - 免费 -->
+                    <a href="detail.html" class="workflow-card">
+                        <div class="card-icon">
+                            <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=96&h=96&fit=crop" alt="AI橘猫日常生活">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">AI橘猫日常生活(一键版)</h3>
+                            <p class="card-desc">橘猫主题爆款短视频，萌宠内容必备</p>
+                            <div class="card-meta">
+                                <span class="usage">13.7k 次使用</span>
+                                <span class="price-tag free">免费</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right arrow"></i>
+                    </a>
+                    
+                </div>
+                
+            </main>
+            
+            <!-- 底部 Tab Bar -->
+            <nav class="tab-bar">
+                <a href="index.html" class="tab-item active">
+                    <i class="fas fa-home"></i>
+                    <span>首页</span>
+                </a>
+                <a href="category.html" class="tab-item">
+                    <i class="fas fa-th-large"></i>
+                    <span>分类</span>
+                </a>
+                <a href="favorites.html" class="tab-item">
+                    <i class="fas fa-heart"></i>
+                    <span>收藏</span>
+                </a>
+                <a href="profile.html" class="tab-item">
+                    <i class="fas fa-user"></i>
+                    <span>我的</span>
+                </a>
+            </nav>
+            
+        </div>
+    </div>
+    
+    <!-- 轮播图自动播放脚本 -->
+    <script>
+        // 轮播图功能
+        (function() {
+            const slides = document.getElementById('bannerSlides');
+            const indicators = document.querySelectorAll('#bannerIndicators .dot');
+            const totalSlides = indicators.length;
+            let currentSlide = 0;
+            let autoPlayInterval;
+            
+            // 切换到指定幻灯片
+            function goToSlide(index) {
+                currentSlide = index;
+                slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // 更新指示器状态
+                indicators.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+            }
+            
+            // 下一张幻灯片
+            function nextSlide() {
+                const next = (currentSlide + 1) % totalSlides;
+                goToSlide(next);
+            }
+            
+            // 开始自动播放
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(nextSlide, 3000);
+            }
+            
+            // 停止自动播放
+            function stopAutoPlay() {
+                clearInterval(autoPlayInterval);
+            }
+            
+            // 点击指示器切换
+            indicators.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    stopAutoPlay();
+                    goToSlide(index);
+                    startAutoPlay();
+                });
+            });
+            
+            // 触摸滑动支持
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            const bannerContainer = document.getElementById('bannerContainer');
+            
+            bannerContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                stopAutoPlay();
+            }, { passive: true });
+            
+            bannerContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+                startAutoPlay();
+            }, { passive: true });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        // 向左滑动 - 下一张
+                        goToSlide((currentSlide + 1) % totalSlides);
+                    } else {
+                        // 向右滑动 - 上一张
+                        goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+                    }
+                }
+            }
+            
+            // 启动自动播放
+            startAutoPlay();
+        })();
+        
+        // 分类标签切换功能
+        (function() {
+            const tabs = document.querySelectorAll('.category-tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // 移除所有激活状态
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // 添加当前激活状态
+                    tab.classList.add('active');
+                    
+                    // 获取分类类型（可用于后续筛选功能）
+                    const category = tab.dataset.category;
+                    console.log('Selected category:', category);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

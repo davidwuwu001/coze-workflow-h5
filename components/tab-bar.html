@@ -1,0 +1,140 @@
+<!--
+  底部 Tab Bar 组件 (TabBar)
+  
+  使用说明：
+  1. 复制此组件代码到页面的 .page-content 容器内的最底部
+  2. 根据当前页面，将对应的 tab-item 添加 active 类
+  3. Tab Bar 高度固定为 83px（含安全区域）
+  
+  导航入口：
+  - 首页 (index.html) - fa-home 图标
+  - 分类 (category.html) - fa-th-large 图标
+  - 收藏 (favorites.html) - fa-heart 图标
+  - 我的 (profile.html) - fa-user 图标
+  
+  Requirements: 1.5
+-->
+
+<!-- 底部 Tab Bar - 首页激活状态 -->
+<nav class="tab-bar">
+    <a href="index.html" class="tab-item active">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+    </a>
+    <a href="category.html" class="tab-item">
+        <i class="fas fa-th-large"></i>
+        <span>分类</span>
+    </a>
+    <a href="favorites.html" class="tab-item">
+        <i class="fas fa-heart"></i>
+        <span>收藏</span>
+    </a>
+    <a href="profile.html" class="tab-item">
+        <i class="fas fa-user"></i>
+        <span>我的</span>
+    </a>
+</nav>
+
+<!--
+  样式说明（已在 styles.css 中定义）：
+  
+  .tab-bar {
+      height: 83px;
+      background-color: #FFFFFF;
+      border-top: 1px solid #E5E5EA;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding-top: 8px;
+      padding-bottom: 34px; (安全区域)
+      flex-shrink: 0;
+  }
+  
+  .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #8E8E93; (默认灰色)
+  }
+  
+  .tab-item.active {
+      color: #007AFF; (iOS蓝色)
+  }
+  
+  .tab-item i {
+      font-size: 24px;
+  }
+  
+  .tab-item span {
+      font-size: 10px;
+  }
+-->
+
+<!-- ========== 各页面使用的 Tab Bar 变体 ========== -->
+
+<!-- 分类页激活状态 -->
+<!--
+<nav class="tab-bar">
+    <a href="index.html" class="tab-item">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+    </a>
+    <a href="category.html" class="tab-item active">
+        <i class="fas fa-th-large"></i>
+        <span>分类</span>
+    </a>
+    <a href="favorites.html" class="tab-item">
+        <i class="fas fa-heart"></i>
+        <span>收藏</span>
+    </a>
+    <a href="profile.html" class="tab-item">
+        <i class="fas fa-user"></i>
+        <span>我的</span>
+    </a>
+</nav>
+-->
+
+<!-- 收藏页激活状态 -->
+<!--
+<nav class="tab-bar">
+    <a href="index.html" class="tab-item">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+    </a>
+    <a href="category.html" class="tab-item">
+        <i class="fas fa-th-large"></i>
+        <span>分类</span>
+    </a>
+    <a href="favorites.html" class="tab-item active">
+        <i class="fas fa-heart"></i>
+        <span>收藏</span>
+    </a>
+    <a href="profile.html" class="tab-item">
+        <i class="fas fa-user"></i>
+        <span>我的</span>
+    </a>
+</nav>
+-->
+
+<!-- 我的页面激活状态 -->
+<!--
+<nav class="tab-bar">
+    <a href="index.html" class="tab-item">
+        <i class="fas fa-home"></i>
+        <span>首页</span>
+    </a>
+    <a href="category.html" class="tab-item">
+        <i class="fas fa-th-large"></i>
+        <span>分类</span>
+    </a>
+    <a href="favorites.html" class="tab-item">
+        <i class="fas fa-heart"></i>
+        <span>收藏</span>
+    </a>
+    <a href="profile.html" class="tab-item active">
+        <i class="fas fa-user"></i>
+        <span>我的</span>
+    </a>
+</nav>
+-->

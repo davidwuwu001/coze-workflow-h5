@@ -1,0 +1,164 @@
+<!--
+  工作流卡片组件 (WorkflowCard)
+  
+  使用说明：
+  1. 复制此组件代码到工作流列表容器中
+  2. 替换图标、标题、描述、使用次数等数据
+  3. 根据价格类型选择对应的价格标签样式
+  4. 设置正确的详情页跳转链接
+  
+  卡片规格：
+  - 圆角: 12px
+  - 内边距: 16px
+  - 图标尺寸: 48×48px
+  - 阴影: 0 2px 8px rgba(0,0,0,0.08)
+  
+  价格标签类型：
+  - free: 免费（绿色）
+  - points: 积分（橙色）
+  - vip: 会员专享（紫色）
+  
+  Requirements: 1.1, 10.1
+-->
+
+<!-- 工作流卡片 - 免费版本 -->
+<a href="detail.html" class="workflow-card">
+    <div class="card-icon">
+        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=96&h=96&fit=crop" alt="工作流图标">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">智能文案生成</h3>
+        <p class="card-desc">一键生成营销文案、产品描述、社交媒体内容</p>
+        <div class="card-meta">
+            <span class="usage">12.5k 次使用</span>
+            <span class="price-tag free">免费</span>
+        </div>
+    </div>
+    <i class="fas fa-chevron-right arrow"></i>
+</a>
+
+<!-- 工作流卡片 - 积分版本 -->
+<a href="detail.html" class="workflow-card">
+    <div class="card-icon">
+        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=96&h=96&fit=crop" alt="工作流图标">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">AI 图像增强</h3>
+        <p class="card-desc">智能提升图片分辨率，修复模糊照片</p>
+        <div class="card-meta">
+            <span class="usage">8.2k 次使用</span>
+            <span class="price-tag points">10积分</span>
+        </div>
+    </div>
+    <i class="fas fa-chevron-right arrow"></i>
+</a>
+
+<!-- 工作流卡片 - 会员专享版本 -->
+<a href="detail.html" class="workflow-card">
+    <div class="card-icon">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=96&h=96&fit=crop" alt="工作流图标">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">数据分析助手</h3>
+        <p class="card-desc">自动分析数据趋势，生成可视化报告</p>
+        <div class="card-meta">
+            <span class="usage">5.6k 次使用</span>
+            <span class="price-tag vip">会员专享</span>
+        </div>
+    </div>
+    <i class="fas fa-chevron-right arrow"></i>
+</a>
+
+<!--
+  样式说明（已在 styles.css 中定义）：
+  
+  .workflow-card {
+      background-color: #FFFFFF;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+  }
+  
+  .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      overflow: hidden;
+  }
+  
+  .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1C1C1E;
+  }
+  
+  .card-desc {
+      font-size: 12px;
+      color: #8E8E93;
+      -webkit-line-clamp: 2;
+  }
+  
+  .price-tag.free { color: #34C759; }
+  .price-tag.points { color: #FF9500; }
+  .price-tag.vip { color: #AF52DE; }
+-->
+
+<!-- ========== 更多卡片示例 ========== -->
+
+<!-- 代码开发类工作流 -->
+<!--
+<a href="detail.html" class="workflow-card">
+    <div class="card-icon">
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=96&h=96&fit=crop" alt="工作流图标">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">代码审查助手</h3>
+        <p class="card-desc">智能检测代码问题，提供优化建议</p>
+        <div class="card-meta">
+            <span class="usage">3.8k 次使用</span>
+            <span class="price-tag points">15积分</span>
+        </div>
+    </div>
+    <i class="fas fa-chevron-right arrow"></i>
+</a>
+-->
+
+<!-- 翻译类工作流 -->
+<!--
+<a href="detail.html" class="workflow-card">
+    <div class="card-icon">
+        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=96&h=96&fit=crop" alt="工作流图标">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">多语言翻译</h3>
+        <p class="card-desc">支持50+语言互译，保持原文风格</p>
+        <div class="card-meta">
+            <span class="usage">15.3k 次使用</span>
+            <span class="price-tag free">免费</span>
+        </div>
+    </div>
+    <i class="fas fa-chevron-right arrow"></i>
+</a>
+-->
+
+<!-- 视频处理类工作流 -->
+<!--
+<a href="detail.html" class="workflow-card">
+    <div class="card-icon">
+        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=96&h=96&fit=crop" alt="工作流图标">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title">视频字幕生成</h3>
+        <p class="card-desc">自动识别语音，生成精准字幕</p>
+        <div class="card-meta">
+            <span class="usage">6.9k 次使用</span>
+            <span class="price-tag vip">会员专享</span>
+        </div>
+    </div>
+    <i class="fas fa-chevron-right arrow"></i>
+</a>
+-->
