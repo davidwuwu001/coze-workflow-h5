@@ -68,9 +68,12 @@ html, body {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
     color: var(--gray-900);
-    background-color: #1a1a1a;
+    background-color: var(--gray-100);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 a {
@@ -93,14 +96,12 @@ button {
 
 /* ==================== 设备容器 ==================== */
 .device-container {
-    width: var(--device-width);
-    height: var(--device-height);
-    margin: 20px auto;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
     background-color: var(--white);
-    border-radius: var(--radius-page);
     overflow: hidden;
     position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .page-content {
@@ -112,56 +113,11 @@ button {
 
 /* ==================== iOS 状态栏 ==================== */
 /* 
- * iOS 状态栏组件
- * 高度: 47px (var(--status-bar-height))
- * 包含: 时间、信号、WiFi、电池图标
- * Requirements: 11.2
+ * iOS 状态栏组件 - 已隐藏
+ * 移动端网页不需要模拟状态栏
  */
 .status-bar {
-    height: var(--status-bar-height);
-    padding: 12px 24px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: transparent;
-    flex-shrink: 0;
-}
-
-.status-bar .time {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    color: var(--black);
-    letter-spacing: -0.3px;
-}
-
-.status-bar .icons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.status-bar .icons i {
-    font-size: var(--font-size-base);
-    color: var(--black);
-}
-
-/* 状态栏 - 浅色文字版本（用于深色背景） */
-.status-bar.light-content .time,
-.status-bar.light-content .icons i {
-    color: var(--white);
-}
-
-/* 状态栏背景变体 */
-.status-bar.bg-white {
-    background-color: var(--white);
-}
-
-.status-bar.bg-transparent {
-    background-color: transparent;
-}
-
-.status-bar.bg-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: none;
 }
 
 /* ==================== 底部 Tab Bar ==================== */
