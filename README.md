@@ -1,92 +1,175 @@
-# Coze 工作流聚合小程序 H5 原型
+# Coze 工作流聚合平台
 
-## 项目简介
+一个基于 Web 的 AI 工作流聚合平台，提供各类智能工作流服务。
 
-这是一个基于 H5 的移动端 Web 应用原型，用于展示和管理 Coze 平台上的各类 AI 工作流。
+## ✨ 特性
 
-## 设计规范
+- 📱 **PWA 支持** - 可安装到手机主屏幕，像原生应用一样使用
+- 🚀 **离线访问** - Service Worker 缓存，支持离线浏览
+- 🎨 **现代 UI** - iOS 风格设计，流畅的用户体验
+- 📦 **工作流分类** - 视频内容、图文生成、智能体等多种分类
+- ⭐ **收藏功能** - 收藏喜欢的工作流，快速访问
+- 🔍 **搜索功能** - 快速查找需要的工作流
+- 👤 **个人中心** - 会员管理、积分系统
 
-- **设计尺寸**: iPhone 15 Pro (393×852px)
-- **页面圆角**: 40px
-- **卡片圆角**: 12px
-- **主色调**: iOS Blue (#007AFF)
+## 🚀 快速开始
 
-## 技术栈
+### 1. 生成 PWA 图标
 
-- **布局框架**: Tailwind CSS 3.x (CDN)
-- **图标库**: FontAwesome 6.x (CDN)
-- **图片资源**: Unsplash/Pexels 真实图片
+在浏览器中打开 `icon-generator.html`：
 
-## 项目结构
+```bash
+# 使用 Python 启动本地服务器
+python3 -m http.server 8000
+
+# 或使用 Node.js
+npx serve
+```
+
+然后访问 `http://localhost:8000/icon-generator.html`，按照页面提示生成并下载图标。
+
+### 2. 放置图标文件
+
+将下载的所有图标文件放到 `images/` 目录下：
+- icon-72x72.png
+- icon-96x96.png
+- icon-128x128.png
+- icon-144x144.png
+- icon-152x152.png
+- icon-192x192.png
+- icon-384x384.png
+- icon-512x512.png
+
+### 3. 本地测试
+
+```bash
+# 启动本地服务器
+python3 -m http.server 8000
+```
+
+访问 `http://localhost:8000`，打开浏览器开发者工具检查：
+- Service Worker 是否注册成功
+- Manifest 是否加载正确
+
+### 4. 移动端测试
+
+#### iOS (Safari)
+1. 在 Safari 中打开网站
+2. 点击分享按钮
+3. 选择"添加到主屏幕"
+
+#### Android (Chrome)
+1. 在 Chrome 中打开网站
+2. 会自动提示"添加到主屏幕"
+3. 或点击菜单 → "安装应用"
+
+## 📁 项目结构
 
 ```
-coze-workflow-h5/
+.
+├── index.html              # 首页
+├── category.html           # 分类页
+├── favorites.html          # 收藏页
+├── profile.html            # 个人中心
+├── detail.html             # 工作流详情
+├── search.html             # 搜索页
+├── settings.html           # 设置页
+├── member.html             # 会员中心
+├── payment.html            # 支付页面
+├── manifest.json           # PWA 配置文件
+├── sw.js                   # Service Worker
+├── icon-generator.html     # 图标生成工具
 ├── css/
-│   └── styles.css          # 公共样式文件（CSS变量、基础样式）
-├── components/
-│   ├── status-bar.html     # iOS 状态栏组件
-│   ├── tab-bar.html        # 底部 Tab Bar 组件
-│   └── workflow-card.html  # 工作流卡片组件
-├── js/
-│   └── .gitkeep            # JavaScript 文件目录
-├── images/
-│   └── .gitkeep            # 图片资源目录
-├── index.html              # 首页（轮播图、分类标签、工作流列表）
-├── category.html           # 分类页（分类网格、分类下工作流列表）
-├── search.html             # 搜索页（搜索框、搜索历史、搜索结果）
-├── detail.html             # 工作流详情页（详细信息、使用按钮）
-├── favorites.html          # 收藏页（收藏的工作流列表）
-├── profile.html            # 我的页面（用户信息、会员状态、设置入口）
-├── member.html             # 会员中心（会员套餐、权益说明）
-├── recharge.html           # 积分充值（积分套餐、充值记录）
-├── payment.html            # 支付页面（支付方式选择、确认支付）
-├── settings.html           # 设置页面（通知、缓存、关于、反馈）
-└── README.md               # 项目说明
+│   └── styles.css          # 全局样式
+├── images/                 # 图标和图片资源
+└── js/                     # JavaScript 文件
 ```
 
-## 颜色系统
+## 🛠️ 技术栈
 
-| 变量名 | 颜色值 | 用途 |
-|--------|--------|------|
-| --primary-color | #007AFF | 主色调 - iOS蓝 |
-| --success-color | #34C759 | 成功/免费 - 绿色 |
-| --warning-color | #FF9500 | 警告/积分 - 橙色 |
-| --danger-color | #FF3B30 | 危险/错误 - 红色 |
-| --purple-color | #AF52DE | 会员专享 - 紫色 |
-| --gray-100 | #F2F2F7 | 背景灰 |
-| --gray-200 | #E5E5EA | 边框灰 |
-| --gray-500 | #8E8E93 | 次要文字 |
-| --gray-900 | #1C1C1E | 主要文字 |
+- **HTML5** - 语义化标签
+- **CSS3** - 现代样式，渐变、动画
+- **JavaScript** - 原生 JS，无框架依赖
+- **Tailwind CSS** - 实用优先的 CSS 框架
+- **Font Awesome** - 图标库
+- **PWA** - Progressive Web App 技术
+- **Service Worker** - 离线缓存和资源管理
 
-## 字体系统
+## 📱 PWA 功能
+
+- ✅ 离线访问
+- ✅ 添加到主屏幕
+- ✅ 全屏显示
+- ✅ 快速加载
+- ✅ 自动更新
+- ✅ 推送通知（可扩展）
+
+## 🌐 部署
+
+### GitHub Pages
+
+1. 推送代码到 GitHub
+2. 在仓库设置中启用 GitHub Pages
+3. 选择 `main` 分支
+4. 访问 `https://your-username.github.io/your-repo`
+
+### Netlify / Vercel
+
+1. 连接 GitHub 仓库
+2. 自动部署
+3. 获得 HTTPS 域名
+
+### 自定义服务器
+
+确保：
+- 使用 HTTPS（PWA 要求）
+- 正确配置 MIME 类型
+- Service Worker 可访问
+
+## 📝 开发说明
+
+### 修改样式
+
+编辑 `css/styles.css` 文件，使用 CSS 变量：
 
 ```css
---font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
---font-size-xs: 10px;
---font-size-sm: 12px;
---font-size-base: 14px;
---font-size-lg: 16px;
---font-size-xl: 18px;
---font-size-2xl: 20px;
---font-size-3xl: 24px;
+:root {
+    --primary-color: #007AFF;
+    --success-color: #34C759;
+    --warning-color: #FF9500;
+    /* ... */
+}
 ```
 
-## 使用方法
+### 添加新页面
 
-1. 直接在浏览器中打开 `index.html` 文件
-2. 或使用本地服务器运行项目
+1. 创建 HTML 文件
+2. 添加 PWA Meta 标签
+3. 注册 Service Worker
+4. 更新 `sw.js` 中的缓存列表
 
-## 页面清单
+### 更新缓存
 
-| 文件名 | 页面名称 | 功能描述 |
-|--------|----------|----------|
-| index.html | 首页 | 轮播图、分类标签、工作流列表 |
-| category.html | 分类页 | 分类网格、分类下工作流列表 |
-| search.html | 搜索页 | 搜索框、搜索历史、搜索结果 |
-| detail.html | 详情页 | 工作流详细信息、使用按钮 |
-| favorites.html | 收藏页 | 收藏的工作流列表 |
-| profile.html | 我的页面 | 用户信息、会员状态、设置入口 |
-| member.html | 会员中心 | 会员套餐、权益说明 |
-| recharge.html | 积分充值 | 积分套餐、充值记录 |
-| payment.html | 支付页面 | 支付方式选择、确认支付 |
-| settings.html | 设置页面 | 通知、缓存、关于、反馈 |
+修改 `sw.js` 中的 `CACHE_NAME`：
+
+```javascript
+const CACHE_NAME = 'coze-workflow-v2'; // 增加版本号
+```
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 📄 许可证
+
+MIT License
+
+## 📞 联系方式
+
+如有问题或建议，请通过以下方式联系：
+- GitHub Issues
+- Email: your-email@example.com
+
+---
+
+Made with ❤️ by Coze Team
